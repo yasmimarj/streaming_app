@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stream_app/core/services/auth_service.dart';
 import 'package:stream_app/core/services/google_sign_in_service.dart';
+import 'package:stream_app/data/models/app_user.dart';
 import 'package:stream_app/presentation/pages/complete_profile_page.dart';
 import 'package:stream_app/presentation/pages/home_page.dart';
+import 'package:stream_app/presentation/pages/welcome_back.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 import 'package:stream_app/presentation/widgets/custom_text_field.dart';
 import 'package:stream_app/presentation/widgets/divider_with_text.dart';
 import 'package:stream_app/presentation/widgets/custom_icon_button.dart';
+import 'package:stream_app/presentation/widgets/generic_text_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,7 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -27,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    usernameController.dispose();
     super.dispose();
   }
 
@@ -57,45 +57,43 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Already have an account? ',
                       style: TextStyle(
                         color: Colors.grey,
                         fontFamily: 'Montserrat',
+                        fontSize: MediaQuery.of(context).size.width * 0.024,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    GestureDetector(
+                    GenericTextButton(
+                      text: 'Sign In!',
                       onTap: () {
-                        // TODO: navigate to login screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WelcomeBackPage()),
+                        );
                       },
-                      child: const Text(
-                        'Sign In!',
-                        style: TextStyle(
-                          fontFamily: 'Fieldwork',
-                          color: Color.fromRGBO(170, 115, 240, 1),
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.04),
-                const Text(
+                Text(
                   'Create an account',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'To get started, please complete your account registration.',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: 14,
+                    fontSize: MediaQuery.of(context).size.width * 0.024,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
@@ -111,11 +109,15 @@ class _LoginPageState extends State<LoginPage> {
                         final googleUser =
                             await GoogleSignInService().signInWithGoogle();
                         if (googleUser != null) {
-                          print('Logged in as ${googleUser.displayName}');
+                          final appUser = AppUser(
+                            displayName: googleUser.displayName ?? "User",
+                            email: googleUser.email,
+                            photoURL: googleUser.photoURL,
+                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(user: googleUser),
+                              builder: (context) => HomePage(user: appUser),
                             ),
                           );
                         }
@@ -134,11 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24),
                 const DividerWithText(text: 'Or Sign up With'),
                 SizedBox(height: screenHeight * 0.04),
-                CustomTextField(
-                  label: 'Username',
-                  controller: usernameController,
-                ),
-                const SizedBox(height: 16),
                 CustomTextField(
                   label: 'Email',
                   controller: emailController,
@@ -172,36 +169,19 @@ class _LoginPageState extends State<LoginPage> {
                     }
 
                     try {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) =>
-                            const Center(child: CircularProgressIndicator()),
-                      );
-
-                      final result = await createAccount(
-                        emailController.text,
-                        passwordController.text,
-                        usernameController.text,
-                      );
-
-                      Navigator.pop(context);
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CompleteProfilePage(
-                            jwt: result['jwt'],
-                            user: result['user'],
+                            email: emailController.text,
+                            password: passwordController.text,
                           ),
                         ),
                       );
                     } catch (error) {
-                      Navigator.pop(context);
-                      print("Deu erro na API: $error ");
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Failed to create account: $error'),
+                          content: Text('Failed to navigate: $error'),
                         ),
                       );
                     }

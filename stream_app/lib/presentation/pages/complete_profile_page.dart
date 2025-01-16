@@ -1,21 +1,51 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:stream_app/core/services/auth_service.dart';
+import 'package:stream_app/data/models/app_user.dart';
+import 'package:stream_app/presentation/pages/home_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 import 'package:stream_app/presentation/widgets/custom_icon_button.dart';
 import 'package:stream_app/presentation/widgets/custom_text_field.dart';
 
-class CompleteProfilePage extends StatelessWidget {
-  final String jwt;
-  final Map<String, dynamic> user;
+class CompleteProfilePage extends StatefulWidget {
+  final String email;
+  final String password;
+
   const CompleteProfilePage({
     Key? key,
-    required this.jwt,
-    required this.user,
+    required this.email,
+    required this.password,
   }) : super(key: key);
+
+  @override
+  State<CompleteProfilePage> createState() => _CompleteProfilePageState();
+}
+
+class _CompleteProfilePageState extends State<CompleteProfilePage> {
+  File? _selectedImage;
+
+  final TextEditingController usernameController = TextEditingController();
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final authService = AuthService();
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(19, 20, 24, 1),
       body: SingleChildScrollView(
@@ -40,9 +70,9 @@ class CompleteProfilePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 11),
-              Text(
-                'Complete your profile, ${user['username']}! ',
-                style: const TextStyle(
+              const Text(
+                'Complete your profile! ',
+                style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: Color.fromRGBO(255, 255, 255, 0.45),
                   fontSize: 14,
@@ -54,16 +84,20 @@ class CompleteProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomIconButton(
-                    iconPath: 'assets/camera.svg',
-                    backgroundColor: const Color(0xFF2E1635),
-                    width: 100,
-                    height: 100,
-                    iconSize: 20,
-                    onPressed: () {
-                      // TODO: Adicionar funcionalidade de selecionar imagem
-                    },
-                  ),
+                  if (_selectedImage != null)
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: FileImage(_selectedImage!),
+                    )
+                  else
+                    CustomIconButton(
+                      iconPath: 'assets/camera.svg',
+                      backgroundColor: const Color(0xFF2E1635),
+                      width: 100,
+                      height: 100,
+                      iconSize: 20,
+                      onPressed: _pickImage,
+                    ),
                   const SizedBox(width: 16),
                   const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,13 +124,72 @@ class CompleteProfilePage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: screenHeight * 0.08),
-              const CustomTextField(
+              CustomTextField(
                 label: 'Your name',
+                controller: usernameController,
               ),
               SizedBox(height: screenHeight * 0.08),
               CustomButton(
-                label: 'Continue',
-                onPressed: () {},
+                label: 'Complete Registration',
+                onPressed: () async {
+                  if (usernameController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please provide your name.'),
+                      ),
+                    );
+                    return;
+                  }
+
+                  if (_selectedImage == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please select an image.'),
+                      ),
+                    );
+                    return;
+                  }
+
+                  try {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) =>
+                          const Center(child: CircularProgressIndicator()),
+                    );
+                    final user = await authService.registerWithEmailAndPassword(
+                      widget.email,
+                      widget.password,
+                      usernameController.text,
+                    );
+
+                    Navigator.pop(context);
+
+                    if (user != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            user: AppUser(
+                              displayName: user.displayName ?? 'User',
+                              email: user.email ?? '',
+                              photoURL: user.photoURL,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  } catch (error) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Failed to complete registration: $error',
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 16),
               TextButton(

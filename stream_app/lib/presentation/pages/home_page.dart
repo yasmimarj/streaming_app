@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:stream_app/data/models/app_user.dart';
 
 class HomePage extends StatelessWidget {
-  final User? user;
+  final AppUser? user;
 
   const HomePage({Key? key, required this.user}) : super(key: key);
 
