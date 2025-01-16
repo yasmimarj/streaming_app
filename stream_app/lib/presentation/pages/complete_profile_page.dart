@@ -61,21 +61,21 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 height: 32,
               ),
               const SizedBox(height: 75),
-              const Text(
+              Text(
                 'Tell us more!',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 11),
-              const Text(
+              Text(
                 'Complete your profile! ',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: Color.fromRGBO(255, 255, 255, 0.45),
-                  fontSize: 14,
+                  fontSize: MediaQuery.of(context).size.width * 0.025,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -99,23 +99,23 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                       onPressed: _pickImage,
                     ),
                   const SizedBox(width: 16),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'CHOOSE IMAGE',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: MediaQuery.of(context).size.width * 0.02,
                             fontWeight: FontWeight.w700,
                             fontFamily: "Epilogue"),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
                         'A square .jpg, .gif, or .png image\n200x200 or larger',
                         style: TextStyle(
                             color: Color.fromRGBO(255, 255, 255, 1),
-                            fontSize: 10,
+                            fontSize: MediaQuery.of(context).size.width * 0.018,
                             fontWeight: FontWeight.w400,
                             fontFamily: "Epilogue"),
                       ),
@@ -192,18 +192,12 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 },
               ),
               const SizedBox(height: 16),
-              TextButton(
+              CustomButton(
+                label: "Back",
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  "Back",
-                  style: TextStyle(
-                    color: Color(0xFFAA73F0),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                isTextButton: true,
               ),
             ],
           ),

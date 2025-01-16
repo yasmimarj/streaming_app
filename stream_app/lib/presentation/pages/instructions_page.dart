@@ -42,12 +42,12 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.03),
-                const Text(
+                Text(
                   "If this was a valid email, instructions to reset your password will be sent to you. Please check your email.",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: 14,
+                    fontSize: MediaQuery.of(context).size.width * 0.025,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,

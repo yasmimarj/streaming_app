@@ -129,18 +129,12 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                         },
                       ),
                       SizedBox(height: screenHeight * 0.016),
-                      TextButton(
+                      CustomButton(
+                        label: "Back",
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text(
-                          "Back",
-                          style: TextStyle(
-                            color: Color(0xFFAA73F0),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        isTextButton: true,
                       ),
                     ],
                   ),
