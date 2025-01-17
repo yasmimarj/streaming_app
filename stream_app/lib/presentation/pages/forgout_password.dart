@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/presentation/pages/instructions_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 import 'package:stream_app/presentation/widgets/custom_text_field.dart';
@@ -99,11 +100,9 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                                 ),
                               ),
                             );
-                            Navigator.push(
+                            navigateWithFade(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const InstructionsPage()),
+                              const InstructionsPage(),
                             );
                           } on FirebaseAuthException catch (e) {
                             String errorMessage;

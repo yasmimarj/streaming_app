@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stream_app/core/services/google_sign_in_service.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/data/models/app_user.dart';
 import 'package:stream_app/presentation/pages/complete_profile_page.dart';
 import 'package:stream_app/presentation/pages/home_page.dart';
@@ -69,10 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                     GenericTextButton(
                       text: 'Sign In!',
                       onTap: () {
-                        Navigator.push(
+                        navigateWithFade(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const WelcomeBackPage()),
+                          const WelcomeBackPage(),
                         );
                       },
                     ),

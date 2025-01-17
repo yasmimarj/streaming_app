@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stream_app/core/services/auth_service.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/data/models/app_user.dart';
 import 'package:stream_app/presentation/pages/home_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
@@ -166,15 +167,13 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     Navigator.pop(context);
 
                     if (user != null) {
-                      Navigator.pushReplacement(
+                      navigateWithFade(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            user: AppUser(
-                              displayName: user.displayName ?? 'User',
-                              email: user.email ?? '',
-                              photoURL: user.photoURL,
-                            ),
+                        HomePage(
+                          user: AppUser(
+                            displayName: user.displayName ?? 'User',
+                            email: user.email ?? '',
+                            photoURL: user.photoURL,
                           ),
                         ),
                       );

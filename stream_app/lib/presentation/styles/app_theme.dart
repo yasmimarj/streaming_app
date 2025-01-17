@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stream_app/presentation/styles/custom_page_transitions.dart';
 
 class AppTheme {
   static const Color primaryColor = Colors.purple;
@@ -46,6 +47,12 @@ class AppTheme {
   }
 
   static ThemeData themeData = ThemeData(
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CustomPageTransitionsBuilder(),
+        TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+      },
+    ),
     scaffoldBackgroundColor: backgroundColor,
     textTheme: GoogleFonts.epilogueTextTheme(),
     primaryColor: primaryColor,

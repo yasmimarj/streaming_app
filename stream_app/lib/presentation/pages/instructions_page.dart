@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/presentation/pages/login_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 
@@ -60,10 +61,9 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                       CustomButton(
                         label: 'Login',
                         onPressed: () async {
-                          Navigator.push(
+                          navigateWithFade(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                            const LoginPage(),
                           );
                         },
                       ),
