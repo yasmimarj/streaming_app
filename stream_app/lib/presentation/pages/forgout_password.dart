@@ -89,7 +89,6 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                           }
 
                           try {
-                            // Envia o e-mail de redefinição de senha
                             await FirebaseAuth.instance
                                 .sendPasswordResetEmail(email: email);
 
