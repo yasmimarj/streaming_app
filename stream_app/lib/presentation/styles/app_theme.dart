@@ -12,7 +12,7 @@ class AppTheme {
   static const Color labelColor = Color(0xFF6C6D7A);
 
   static InputDecoration inputDecoration(String label,
-      {String? svgIconPath, VoidCallback? onIconTap}) {
+      {String? svgIconPath, VoidCallback? onIconTap, Widget? suffixIcon}) {
     return InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(color: labelColor),
@@ -26,23 +26,24 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8.0),
         borderSide: const BorderSide(color: borderColor, width: 2),
       ),
-      suffixIcon: svgIconPath != null
-          ? GestureDetector(
-              onTap: onIconTap,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SvgPicture.asset(
-                  svgIconPath,
-                  width: 20,
-                  height: 20,
-                  colorFilter: const ColorFilter.mode(
-                    labelColor,
-                    BlendMode.srcIn,
+      suffixIcon: suffixIcon ??
+          (svgIconPath != null
+              ? GestureDetector(
+                  onTap: onIconTap,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SvgPicture.asset(
+                      svgIconPath,
+                      width: 20,
+                      height: 20,
+                      colorFilter: const ColorFilter.mode(
+                        labelColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            )
-          : null,
+                )
+              : null),
     );
   }
 

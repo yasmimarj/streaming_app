@@ -158,6 +158,26 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   label: 'Create Account',
                   onPressed: () async {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('All fields are required.'),
+                        ),
+                      );
+                      return;
+                    }
+
+                    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                    if (!emailRegex.hasMatch(emailController.text)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter a valid email address.'),
+                        ),
+                      );
+                      return;
+                    }
                     if (passwordController.text !=
                         confirmPasswordController.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -167,7 +187,6 @@ class _LoginPageState extends State<LoginPage> {
                       );
                       return;
                     }
-
                     try {
                       Navigator.push(
                         context,
