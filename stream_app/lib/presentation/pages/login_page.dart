@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stream_app/core/services/google_sign_in_service.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/data/models/app_user.dart';
 import 'package:stream_app/presentation/pages/complete_profile_page.dart';
 import 'package:stream_app/presentation/pages/home_page.dart';
@@ -69,10 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                     GenericTextButton(
                       text: 'Sign In!',
                       onTap: () {
-                        Navigator.push(
+                        navigateWithFade(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const WelcomeBackPage()),
+                          const WelcomeBackPage(),
                         );
                       },
                     ),
@@ -158,6 +158,26 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   label: 'Create Account',
                   onPressed: () async {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('All fields are required.'),
+                        ),
+                      );
+                      return;
+                    }
+
+                    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                    if (!emailRegex.hasMatch(emailController.text)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter a valid email address.'),
+                        ),
+                      );
+                      return;
+                    }
                     if (passwordController.text !=
                         confirmPasswordController.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -167,7 +187,6 @@ class _LoginPageState extends State<LoginPage> {
                       );
                       return;
                     }
-
                     try {
                       Navigator.push(
                         context,

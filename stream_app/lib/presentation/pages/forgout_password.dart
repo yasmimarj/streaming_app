@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/presentation/pages/instructions_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 import 'package:stream_app/presentation/widgets/custom_text_field.dart';
@@ -88,7 +89,6 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                           }
 
                           try {
-                            // Envia o e-mail de redefinição de senha
                             await FirebaseAuth.instance
                                 .sendPasswordResetEmail(email: email);
 
@@ -99,11 +99,9 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                                 ),
                               ),
                             );
-                            Navigator.push(
+                            navigateWithFade(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const InstructionsPage()),
+                              const InstructionsPage(),
                             );
                           } on FirebaseAuthException catch (e) {
                             String errorMessage;
@@ -129,18 +127,12 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                         },
                       ),
                       SizedBox(height: screenHeight * 0.016),
-                      TextButton(
+                      CustomButton(
+                        label: "Back",
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text(
-                          "Back",
-                          style: TextStyle(
-                            color: Color(0xFFAA73F0),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        isTextButton: true,
                       ),
                     ],
                   ),

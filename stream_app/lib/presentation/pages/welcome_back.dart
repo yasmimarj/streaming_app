@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stream_app/core/services/google_sign_in_service.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/data/models/app_user.dart';
 import 'package:stream_app/presentation/pages/forgout_password.dart';
 import 'package:stream_app/presentation/pages/home_page.dart';
@@ -89,10 +90,9 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                   child: GenericTextButton(
                     text: 'Forgot Password?',
                     onTap: () {
-                      Navigator.push(
+                      navigateWithFade(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const ForgoutPasswordPage()),
+                        const ForgoutPasswordPage(),
                       );
                     },
                   ),
@@ -126,11 +126,9 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                           photoURL: firebaseUser.photoURL,
                         );
 
-                        Navigator.push(
+                        navigateWithFade(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(user: appUser),
-                          ),
+                          HomePage(user: appUser),
                         );
                       }
                     } on FirebaseAuthException catch (e) {
@@ -172,11 +170,9 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                             email: googleUser.email,
                             photoURL: googleUser.photoURL,
                           );
-                          Navigator.push(
+                          navigateWithFade(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(user: appUser),
-                            ),
+                            HomePage(user: appUser),
                           );
                         }
                       },
@@ -207,10 +203,9 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                     GenericTextButton(
                       text: 'Sign Up!',
                       onTap: () {
-                        Navigator.push(
+                        navigateWithFade(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
+                          const LoginPage(),
                         );
                       },
                     ),

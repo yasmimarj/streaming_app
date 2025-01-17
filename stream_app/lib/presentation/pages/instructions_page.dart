@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:stream_app/core/utils/navigation_utils.dart';
 import 'package:stream_app/presentation/pages/login_page.dart';
 import 'package:stream_app/presentation/widgets/custom_button.dart';
 
@@ -42,12 +43,12 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.03),
-                const Text(
+                Text(
                   "If this was a valid email, instructions to reset your password will be sent to you. Please check your email.",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: 14,
+                    fontSize: MediaQuery.of(context).size.width * 0.025,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
@@ -60,10 +61,9 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                       CustomButton(
                         label: 'Login',
                         onPressed: () async {
-                          Navigator.push(
+                          navigateWithFade(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                            const LoginPage(),
                           );
                         },
                       ),
