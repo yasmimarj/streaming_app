@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:stream_app/presentation/styles/app_theme.dart';
+import 'package:untold/presentation/styles/app_theme.dart';
 import 'presentation/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeFirebase();
   runApp(const MyApp());
+}
+
+Future<void> initializeFirebase() async {
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp();
+  }
 }
 
 class MyApp extends StatelessWidget {

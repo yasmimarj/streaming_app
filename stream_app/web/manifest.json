@@ -1,6 +1,6 @@
 {
-    "name": "stream_app",
-    "short_name": "stream_app",
+    "name": "untold",
+    "short_name": "untold",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

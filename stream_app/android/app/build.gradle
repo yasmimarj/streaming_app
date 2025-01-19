@@ -20,7 +20,7 @@ def flutterVersionCode = localProperties.getProperty("flutter.versionCode", "1")
 def flutterVersionName = localProperties.getProperty("flutter.versionName", "1.0")
 
 android {
-    namespace = "com.example.stream_app"
+    namespace = "com.app.untold"
     compileSdk = 34 // Certifique-se de que é compatível com as bibliotecas usadas
     ndkVersion = flutter.ndkVersion
 
@@ -30,7 +30,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.stream_app"
+        applicationId = "com.app.untold"
         minSdk = 23
         targetSdk = 34
         versionCode = flutterVersionCode
