@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stream_app/core/services/google_sign_in_service.dart';
-import 'package:stream_app/core/utils/navigation_utils.dart';
-import 'package:stream_app/data/models/app_user.dart';
-import 'package:stream_app/presentation/pages/complete_profile_page.dart';
-import 'package:stream_app/presentation/pages/home_page.dart';
-import 'package:stream_app/presentation/pages/welcome_back.dart';
-import 'package:stream_app/presentation/widgets/custom_button.dart';
-import 'package:stream_app/presentation/widgets/custom_text_field.dart';
-import 'package:stream_app/presentation/widgets/divider_with_text.dart';
-import 'package:stream_app/presentation/widgets/custom_icon_button.dart';
-import 'package:stream_app/presentation/widgets/generic_text_button.dart';
+import 'package:untold/core/services/google_sign_in_service.dart';
+import 'package:untold/core/utils/navigation_utils.dart';
+import 'package:untold/data/models/app_user.dart';
+import 'package:untold/presentation/pages/complete_profile_page.dart';
+import 'package:untold/presentation/pages/home_page.dart';
+import 'package:untold/presentation/pages/welcome_back.dart';
+import 'package:untold/presentation/widgets/custom_button.dart';
+import 'package:untold/presentation/widgets/custom_text_field.dart';
+import 'package:untold/presentation/widgets/divider_with_text.dart';
+import 'package:untold/presentation/widgets/custom_icon_button.dart';
+import 'package:untold/presentation/widgets/generic_text_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

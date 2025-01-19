@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:stream_app/core/utils/navigation_utils.dart';
-import 'package:stream_app/presentation/pages/login_page.dart';
-import 'package:stream_app/presentation/widgets/custom_button.dart';
+import 'package:untold/core/utils/navigation_utils.dart';
+import 'package:untold/presentation/pages/login_page.dart';
+import 'package:untold/presentation/widgets/custom_button.dart';
 
 class InstructionsPage extends StatefulWidget {
   const InstructionsPage({Key? key}) : super(key: key);

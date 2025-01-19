@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: const Color(0xFFAA73F0),
+            color: const Color.fromRGBO(170, 115, 240, 0.2),
             fontSize: fontSize ?? screenWidth * 0.025,
             fontWeight: FontWeight.bold,
           ),
@@ -38,12 +38,12 @@ class CustomButton extends StatelessWidget {
         child: Container(
           width: screenWidth / 2,
           decoration: BoxDecoration(
-            color: backgroundColor ?? const Color.fromRGBO(63, 40, 73, 1.0),
+            color: backgroundColor ?? const Color.fromRGBO(170, 115, 240, 0.2),
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x33F1CC4C),
-                blurRadius: 30,
+                color: Color.fromRGBO(241, 205, 76, 0.1),
+                blurRadius: 18.33,
                 spreadRadius: 10,
                 offset: Offset(0, 0),
               ),

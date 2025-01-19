@@ -1,17 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:stream_app/core/services/google_sign_in_service.dart';
-import 'package:stream_app/core/utils/navigation_utils.dart';
-import 'package:stream_app/data/models/app_user.dart';
-import 'package:stream_app/presentation/pages/forgout_password.dart';
-import 'package:stream_app/presentation/pages/home_page.dart';
-import 'package:stream_app/presentation/pages/login_page.dart';
-import 'package:stream_app/presentation/widgets/custom_button.dart';
-import 'package:stream_app/presentation/widgets/custom_icon_button.dart';
-import 'package:stream_app/presentation/widgets/custom_text_field.dart';
-import 'package:stream_app/presentation/widgets/divider_with_text.dart';
-import 'package:stream_app/presentation/widgets/generic_text_button.dart';
+import 'package:untold/core/services/auth_service.dart';
+import 'package:untold/core/services/google_sign_in_service.dart';
+import 'package:untold/core/utils/navigation_utils.dart';
+import 'package:untold/data/models/api_user.dart';
+import 'package:untold/data/models/app_user.dart';
+import 'package:untold/data/repositories/user_repository.dart';
+import 'package:untold/data/services/api_service.dart';
+import 'package:untold/data/services/dio_config.dart';
+import 'package:untold/presentation/pages/forgout_password.dart';
+import 'package:untold/presentation/pages/home_page.dart';
+import 'package:untold/presentation/pages/login_page.dart';
+import 'package:untold/presentation/widgets/custom_button.dart';
+import 'package:untold/presentation/widgets/custom_icon_button.dart';
+import 'package:untold/presentation/widgets/custom_text_field.dart';
+import 'package:untold/presentation/widgets/divider_with_text.dart';
+import 'package:untold/presentation/widgets/generic_text_button.dart';
 
 class WelcomeBackPage extends StatefulWidget {
   const WelcomeBackPage({Key? key}) : super(key: key);
@@ -23,6 +28,36 @@ class WelcomeBackPage extends StatefulWidget {
 class _WelcomeBackPageState extends State<WelcomeBackPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  late UserRepository userRepository;
+  late AuthService authService;
+  List<ApiUser> users = [];
+
+  @override
+  void initState() {
+    super.initState();
+    authService = AuthService();
+  }
+
+  Future<void> fetchUsers() async {
+    try {
+      final List<ApiUser> fetchedUsers =
+          await userRepository.fetchAndStoreUsers();
+
+      for (var user in fetchedUsers) {
+        print(user);
+      }
+
+      setState(() {
+        users = fetchedUsers;
+      });
+    } catch (e) {
+      print("Erro ao buscar usuários: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao buscar usuários: $e')),
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -120,16 +155,28 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                       final firebaseUser = userCredential.user;
 
                       if (firebaseUser != null) {
-                        final appUser = AppUser(
-                          displayName: firebaseUser.displayName ?? "User",
-                          email: firebaseUser.email ?? "",
-                          photoURL: firebaseUser.photoURL,
-                        );
+                        final String? token =
+                            await firebaseUser.getIdToken(true);
+                        if (token != null) {
+                          print("TOKEN WELCOME: $token");
+                          final dio = setupDio(authService);
+                          final apiService = ApiService(dio);
+                          userRepository = UserRepository(apiService);
+                          await fetchUsers();
 
-                        navigateWithFade(
-                          context,
-                          HomePage(user: appUser),
-                        );
+                          final appUser = AppUser(
+                            displayName: firebaseUser.displayName ?? "User",
+                            email: firebaseUser.email ?? "",
+                            photoURL: firebaseUser.photoURL,
+                          );
+
+                          navigateWithFade(
+                            context,
+                            HomePage(user: appUser),
+                          );
+                        } else {
+                          throw Exception("Falha ao obter o token JWT.");
+                        }
                       }
                     } on FirebaseAuthException catch (e) {
                       String message;

@@ -8,28 +8,14 @@ part of 'register_response.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
-      id: (json['id'] as num).toInt(),
-      username: json['username'] as String,
-      email: json['email'] as String,
-      provider: json['provider'] as String,
-      confirmed: json['confirmed'] as bool,
-      blocked: json['blocked'] as bool,
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
-      role: Role.fromJson(json['role'] as Map<String, dynamic>),
+      jwt: json['jwt'] as String,
+      apiUser: ApiUser.fromJson(json['apiUser'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'username': instance.username,
-      'email': instance.email,
-      'provider': instance.provider,
-      'confirmed': instance.confirmed,
-      'blocked': instance.blocked,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-      'role': instance.role,
+      'jwt': instance.jwt,
+      'apiUser': instance.apiUser,
     };
 
 Role _$RoleFromJson(Map<String, dynamic> json) => Role(
@@ -37,6 +23,8 @@ Role _$RoleFromJson(Map<String, dynamic> json) => Role(
       name: json['name'] as String,
       description: json['description'] as String,
       type: json['type'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$RoleToJson(Role instance) => <String, dynamic>{
@@ -44,4 +32,6 @@ Map<String, dynamic> _$RoleToJson(Role instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'type': instance.type,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
     };

@@ -1,29 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:untold/data/models/api_user.dart';
 
 part 'register_response.g.dart';
 
 @JsonSerializable()
 class RegisterResponse {
-  final int id;
-  final String username;
-  final String email;
-  final String provider;
-  final bool confirmed;
-  final bool blocked;
-  final String createdAt;
-  final String updatedAt;
-  final Role role;
+  final String jwt;
+  final ApiUser apiUser;
 
   RegisterResponse({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.provider,
-    required this.confirmed,
-    required this.blocked,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.role,
+    required this.jwt,
+    required this.apiUser,
   });
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
@@ -38,12 +25,16 @@ class Role {
   final String name;
   final String description;
   final String type;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Role({
     required this.id,
     required this.name,
     required this.description,
     required this.type,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);

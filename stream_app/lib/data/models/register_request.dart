@@ -14,7 +14,6 @@ class RegisterRequest {
     required this.password,
   });
 
-  // Métodos para serializar e desserializar JSON
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
       _$RegisterRequestFromJson(json);
 

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   Future<User?> registerWithEmailAndPassword(
       String email, String password, String username) async {
     try {
@@ -24,6 +25,31 @@ class AuthService {
       }
     } catch (e) {
       throw Exception('An error occurred: $e');
+    }
+  }
+
+  // Nova função para obter o token do usuário atual
+  Future<String?> getAuthToken() async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        return await user.getIdToken();
+      }
+      return null; // Usuário não autenticado
+    } catch (e) {
+      throw Exception('Erro ao obter token: $e');
+    }
+  }
+
+  Future<String?> getFirebaseUID() async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        return user.uid; // Retorna o UID do usuário
+      }
+      return null; // Nenhum usuário autenticado
+    } catch (e) {
+      throw Exception('Erro ao obter UID: $e');
     }
   }
 }

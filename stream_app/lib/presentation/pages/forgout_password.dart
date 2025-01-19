@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:stream_app/core/utils/navigation_utils.dart';
-import 'package:stream_app/presentation/pages/instructions_page.dart';
-import 'package:stream_app/presentation/widgets/custom_button.dart';
-import 'package:stream_app/presentation/widgets/custom_text_field.dart';
+import 'package:untold/core/utils/navigation_utils.dart';
+import 'package:untold/presentation/pages/instructions_page.dart';
+import 'package:untold/presentation/widgets/custom_button.dart';
+import 'package:untold/presentation/widgets/custom_text_field.dart';
 
 class ForgoutPasswordPage extends StatefulWidget {
   const ForgoutPasswordPage({Key? key}) : super(key: key);

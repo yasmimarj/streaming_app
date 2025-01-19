@@ -2,13 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stream_app/core/services/auth_service.dart';
-import 'package:stream_app/core/utils/navigation_utils.dart';
-import 'package:stream_app/data/models/app_user.dart';
-import 'package:stream_app/presentation/pages/home_page.dart';
-import 'package:stream_app/presentation/widgets/custom_button.dart';
-import 'package:stream_app/presentation/widgets/custom_icon_button.dart';
-import 'package:stream_app/presentation/widgets/custom_text_field.dart';
+import 'package:untold/core/services/auth_service.dart';
+import 'package:untold/core/utils/navigation_utils.dart';
+import 'package:untold/data/models/app_user.dart';
+import 'package:untold/data/models/register_request.dart';
+import 'package:untold/data/services/api_service.dart';
+import 'package:untold/presentation/pages/home_page.dart';
+import 'package:untold/presentation/widgets/custom_button.dart';
+import 'package:untold/presentation/widgets/custom_icon_button.dart';
+import 'package:untold/presentation/widgets/custom_text_field.dart';
 
 class CompleteProfilePage extends StatefulWidget {
   final String email;
@@ -167,6 +169,29 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     Navigator.pop(context);
 
                     if (user != null) {
+                      // Obtém o token do Firebase Auth
+                      final token = await authService.getAuthToken();
+                      if (token == null) {
+                        throw Exception("Token não encontrado.");
+                      }
+
+                      final apiService = createApiService(authService);
+
+                      // Cria o objeto RegisterRequest
+                      final registerRequest = RegisterRequest(
+                        username: usernameController.text,
+                        email: widget.email,
+                        password: widget.password,
+                      );
+
+                      try {
+                        final response =
+                            await apiService.register(registerRequest);
+                        print("JWT: ${response.jwt}");
+                        print("Username: ${response.apiUser.username}");
+                      } catch (e) {
+                        print("Erro ao registrar: $e");
+                      }
                       navigateWithFade(
                         context,
                         HomePage(
