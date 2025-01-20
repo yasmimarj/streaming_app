@@ -22,7 +22,7 @@ class GenericTextButton extends StatelessWidget {
             TextStyle(
               fontFamily: 'Fieldwork',
               color: Color.fromRGBO(170, 115, 240, 1),
-              fontSize: MediaQuery.of(context).size.width * 0.024,
+              fontSize: MediaQuery.of(context).size.width * 0.03,
               fontWeight: FontWeight.w700,
             ),
       ),

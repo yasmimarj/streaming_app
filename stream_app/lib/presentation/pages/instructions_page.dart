@@ -15,6 +15,7 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color.fromARGB(19, 20, 24, 1),
       body: SingleChildScrollView(
@@ -30,15 +31,15 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                 SizedBox(height: screenHeight * 0.1),
                 SvgPicture.asset(
                   'assets/subtract.svg',
-                  width: 30,
-                  height: 30,
+                  width: screenHeight * 0.05,
+                  height: screenHeight * 0.05,
                 ),
                 SizedBox(height: screenHeight * 0.04),
                 Text(
                   'The instructions were sent!',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontSize: screenWidth * 0.04,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -48,14 +49,14 @@ class _InstructionsPagePageState extends State<InstructionsPage> {
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: MediaQuery.of(context).size.width * 0.025,
+                    fontSize: screenWidth * 0.03,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: screenHeight * 0.5),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.15),
                   child: Column(
                     children: [
                       CustomButton(

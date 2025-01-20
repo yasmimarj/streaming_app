@@ -55,10 +55,19 @@ dependencies:
   intl: ^0.20.1
   share_plus: ^10.1.4
   palette_generator: ^0.3.3+5
+  
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.3
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/stream_premium.png" 
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

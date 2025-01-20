@@ -36,16 +36,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.01,
+        vertical: screenHeight * 0.01,
+      ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(screenWidth * 0.02),
         boxShadow: widget.isPassword
             ? [
-                const BoxShadow(
-                  color: Color.fromRGBO(176, 178, 204, 0.2),
-                  blurRadius: 15,
-                  spreadRadius: 2,
-                  offset: Offset(0, -6),
+                BoxShadow(
+                  color: const Color.fromRGBO(176, 178, 204, 0.2),
+                  blurRadius: screenWidth * 0.03,
+                  spreadRadius: screenWidth * 0.001,
+                  offset: Offset(0, -screenHeight * 0.003),
                 ),
               ]
             : [],
@@ -62,12 +69,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   icon: Icon(
                     _obscureText ? Icons.visibility : Icons.visibility_off,
                     color: AppTheme.textColor,
+                    size: screenWidth * 0.04,
                   ),
                   onPressed: _togglePasswordVisibility,
                 )
               : null,
         ),
-        style: const TextStyle(color: AppTheme.textColor),
+        style: TextStyle(
+          color: AppTheme.textColor,
+          fontSize: screenWidth * 0.02,
+        ),
       ),
     );
   }

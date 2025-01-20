@@ -68,7 +68,9 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(19, 20, 24, 1),
       body: SingleChildScrollView(
@@ -77,32 +79,32 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
             minHeight: screenHeight,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: screenHeight * 0.1),
                 SvgPicture.asset(
                   'assets/subtract.svg',
-                  width: 30,
-                  height: 30,
+                  width: screenWidth * 0.05,
+                  height: screenWidth * 0.05,
                 ),
                 SizedBox(height: screenHeight * 0.04),
                 Text(
                   'Welcome Back',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontSize: screenWidth * 0.04,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: screenHeight * 0.01),
                 Text(
                   'Look who is here!',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: MediaQuery.of(context).size.width * 0.024,
+                    fontSize: screenWidth * 0.03,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
@@ -112,7 +114,7 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                   label: 'Email',
                   controller: emailController,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: screenHeight * 0.01),
                 CustomTextField(
                   label: 'Password',
                   controller: passwordController,
@@ -122,14 +124,17 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                 SizedBox(height: screenHeight * 0.02),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: GenericTextButton(
-                    text: 'Forgot Password?',
-                    onTap: () {
-                      navigateWithFade(
-                        context,
-                        const ForgoutPasswordPage(),
-                      );
-                    },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: screenWidth * 0.01),
+                    child: GenericTextButton(
+                      text: 'Forgot Password?',
+                      onTap: () {
+                        navigateWithFade(
+                          context,
+                          const ForgoutPasswordPage(),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.06),
@@ -158,7 +163,6 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                         final String? token =
                             await firebaseUser.getIdToken(true);
                         if (token != null) {
-                          print("TOKEN WELCOME: $token");
                           final dio = setupDio(authService);
                           final apiService = ApiService(dio);
                           userRepository = UserRepository(apiService);
@@ -224,7 +228,7 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                         }
                       },
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: screenWidth * 0.04),
                     CustomIconButton(
                       iconPath: 'assets/apple.svg',
                       backgroundColor: const Color(0xFF6C6D7A),
@@ -239,11 +243,11 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Dont't have an account? ",
+                      "Don't have an account? ",
                       style: TextStyle(
                         color: Colors.grey,
                         fontFamily: 'Montserrat',
-                        fontSize: MediaQuery.of(context).size.width * 0.024,
+                        fontSize: screenWidth * 0.03,
                         fontWeight: FontWeight.w400,
                       ),
                     ),

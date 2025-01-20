@@ -6,15 +6,12 @@ class AuthInterceptor extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      // Obtém o usuário atual do Firebase Auth
       User? user = FirebaseAuth.instance.currentUser;
 
       if (user == null) {
         print("Usuário não autenticado. Requisição sem token.");
-        return super.onRequest(options, handler); // Prossegue sem token
+        return super.onRequest(options, handler);
       }
-
-      // Recupera o token de autenticação do usuário
       String? token = await user.getIdToken();
 
       if (token != null) {
@@ -26,8 +23,6 @@ class AuthInterceptor extends Interceptor {
     } catch (e) {
       print("Erro ao adicionar o token de autenticação: $e");
     }
-
-    // Prossegue com a requisição
     super.onRequest(options, handler);
   }
 }
