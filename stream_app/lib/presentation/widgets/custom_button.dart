@@ -26,8 +26,8 @@ class CustomButton extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: const Color.fromRGBO(170, 115, 240, 0.2),
-            fontSize: fontSize ?? screenWidth * 0.025,
+            color: const Color(0xFFAA73F0),
+            fontSize: fontSize ?? screenWidth * 0.04,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -57,7 +57,7 @@ class CustomButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0xFFAA73F0),
-              fontSize: fontSize ?? screenWidth * 0.025,
+              fontSize: fontSize ?? screenWidth * 0.04,
               fontWeight: FontWeight.bold,
             ),
           ),

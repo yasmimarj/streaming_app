@@ -77,7 +77,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         style: TextStyle(
           color: AppTheme.textColor,
-          fontSize: screenWidth * 0.02,
+          fontSize: screenWidth * 0.04,
         ),
       ),
     );

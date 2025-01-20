@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   'Create an account',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: screenWidth * 0.05,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -108,6 +108,16 @@ class _LoginPageState extends State<LoginPage> {
                       iconPath: 'assets/google.svg',
                       backgroundColor: const Color(0xFF2E1635),
                       onPressed: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
                         try {
                           final googleUser =
                               await GoogleSignInService().signInWithGoogle();
@@ -117,17 +127,22 @@ class _LoginPageState extends State<LoginPage> {
                               email: googleUser.email,
                               photoURL: googleUser.photoURL,
                             );
-                            Navigator.push(
+
+                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => HomePage(user: appUser),
                               ),
+                              (route) => false,
                             );
                           } else {
-                            print("Usuário cancelou o login.");
+                            Navigator.pop(context);
+                            print("User canceled the login.");
                           }
                         } catch (e) {
-                          print("Erro ao fazer login com o Google: $e");
+                          Navigator.pop(context);
+                          print("Error while logging in with Google: $e");
                         }
                       },
                     ),

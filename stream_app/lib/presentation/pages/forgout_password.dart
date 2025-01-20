@@ -42,15 +42,15 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                 SizedBox(height: screenHeight * 0.1),
                 SvgPicture.asset(
                   'assets/subtract.svg',
-                  width: screenWidth * 0.05,
-                  height: screenWidth * 0.05,
+                  width: screenWidth * 0.08,
+                  height: screenWidth * 0.08,
                 ),
                 SizedBox(height: screenHeight * 0.04),
                 Text(
                   'Forgot Password?',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: screenWidth * 0.05,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

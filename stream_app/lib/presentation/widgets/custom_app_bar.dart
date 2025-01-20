@@ -29,17 +29,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         title: SvgPicture.asset(
           'assets/subtract.svg',
-          width: screenWidth * 0.5,
-          height: screenWidth * 0.5,
+          width: screenWidth * 0.8,
+          height: screenWidth * 0.8,
         ),
         actions: showUserAvatar
             ? [
                 Padding(
-                  padding: EdgeInsets.only(right: screenWidth * 0.4),
+                  padding: EdgeInsets.only(right: screenWidth * 0.3),
                   child: GestureDetector(
                     onTap: onAvatarTap,
                     child: CircleAvatar(
-                      radius: screenWidth * 0.25,
+                      radius: screenWidth * 0.8,
                       backgroundImage: userPhotoURL != null
                           ? NetworkImage(userPhotoURL!)
                           : null,
