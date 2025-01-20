@@ -23,6 +23,8 @@ class _RateWidgetState extends State<RateWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.bottomCenter,
@@ -63,12 +65,13 @@ class _RateWidgetState extends State<RateWidget> {
             child: Material(
               color: Colors.transparent,
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                width: screenWidth * 0.8,
+                padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.02,
+                    horizontal: screenWidth * 0.04),
                 decoration: BoxDecoration(
                   color: Colors.black87,
-                  borderRadius: BorderRadius.circular(40),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,17 +80,21 @@ class _RateWidgetState extends State<RateWidget> {
                       "assets/not_like.svg",
                       "not_like",
                       "It's not for me",
+                      screenWidth,
                     ),
-                    _ratingOption("assets/like.svg", "like", "I Like it"),
+                    _ratingOption(
+                        "assets/like.svg", "like", "I Like it", screenWidth),
                     _ratingOption(
                       "assets/super_like.svg",
                       "super_like",
                       "I love it!",
+                      screenWidth,
                     ),
                     _ratingOption(
                       "assets/square_close.svg",
                       null,
                       "",
+                      screenWidth,
                       isCloseButton: true,
                     ),
                   ],
@@ -102,7 +109,8 @@ class _RateWidgetState extends State<RateWidget> {
   Widget _ratingOption(
     String assetPath,
     String? value,
-    String label, {
+    String label,
+    double screenWidth, {
     bool isCloseButton = false,
   }) {
     return GestureDetector(
@@ -128,8 +136,8 @@ class _RateWidgetState extends State<RateWidget> {
         children: [
           SvgPicture.asset(
             assetPath,
-            width: 25,
-            height: 25,
+            width: screenWidth * 0.04,
+            height: screenWidth * 0.04,
             color: isCloseButton
                 ? const Color.fromRGBO(170, 115, 240, 1)
                 : Colors.white,

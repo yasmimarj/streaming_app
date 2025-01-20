@@ -78,7 +78,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: Color.fromRGBO(255, 255, 255, 0.45),
-                  fontSize: MediaQuery.of(context).size.width * 0.025,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -169,15 +169,12 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     Navigator.pop(context);
 
                     if (user != null) {
-                      // Obtém o token do Firebase Auth
                       final token = await authService.getAuthToken();
                       if (token == null) {
                         throw Exception("Token não encontrado.");
                       }
 
                       final apiService = createApiService(authService);
-
-                      // Cria o objeto RegisterRequest
                       final registerRequest = RegisterRequest(
                         username: usernameController.text,
                         email: widget.email,

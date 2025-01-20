@@ -5,45 +5,49 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? userPhotoURL;
   final bool showUserAvatar;
   final bool showLeadingIcon;
+  final VoidCallback? onAvatarTap;
 
   const CustomAppBar({
     Key? key,
     this.userPhotoURL,
     this.showUserAvatar = false,
     this.showLeadingIcon = false,
+    this.onAvatarTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final appBarHeight = screenHeight * 0.1;
+    final screenWidth = MediaQuery.of(context).size.width * 0.1;
 
     return PreferredSize(
-      preferredSize: Size.fromHeight(appBarHeight),
+      preferredSize: Size.fromHeight(screenWidth),
       child: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: showLeadingIcon,
-        toolbarHeight: appBarHeight,
+        toolbarHeight: screenWidth,
         centerTitle: true,
         title: SvgPicture.asset(
           'assets/subtract.svg',
-          width: appBarHeight * 0.5,
-          height: appBarHeight * 0.5,
+          width: screenWidth * 0.8,
+          height: screenWidth * 0.8,
         ),
         actions: showUserAvatar
             ? [
                 Padding(
-                  padding: EdgeInsets.only(right: appBarHeight * 0.2),
-                  child: CircleAvatar(
-                    radius: appBarHeight * 0.25,
-                    backgroundImage: userPhotoURL != null
-                        ? NetworkImage(userPhotoURL!)
-                        : null,
-                    child: userPhotoURL == null
-                        ? const Icon(Icons.person,
-                            size: 30, color: Colors.white)
-                        : null,
+                  padding: EdgeInsets.only(right: screenWidth * 0.3),
+                  child: GestureDetector(
+                    onTap: onAvatarTap,
+                    child: CircleAvatar(
+                      radius: screenWidth * 0.8,
+                      backgroundImage: userPhotoURL != null
+                          ? NetworkImage(userPhotoURL!)
+                          : null,
+                      child: userPhotoURL == null
+                          ? Icon(Icons.person,
+                              size: (screenWidth * 0.02), color: Colors.white)
+                          : null,
+                    ),
                   ),
                 ),
               ]

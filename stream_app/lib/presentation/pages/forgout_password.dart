@@ -24,7 +24,9 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(19, 20, 24, 1),
       body: SingleChildScrollView(
@@ -33,32 +35,32 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
             minHeight: screenHeight,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: screenHeight * 0.1),
                 SvgPicture.asset(
                   'assets/subtract.svg',
-                  width: 30,
-                  height: 30,
+                  width: screenWidth * 0.08,
+                  height: screenWidth * 0.08,
                 ),
                 SizedBox(height: screenHeight * 0.04),
                 Text(
                   'Forgot Password?',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontSize: screenWidth * 0.05,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.03),
+                SizedBox(height: screenHeight * 0.01),
                 Text(
                   "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: MediaQuery.of(context).size.width * 0.024,
+                    fontSize: screenWidth * 0.03,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
@@ -68,9 +70,9 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                   label: 'Email',
                   controller: emailController,
                 ),
-                SizedBox(height: screenHeight * 0.4),
+                SizedBox(height: screenHeight * 0.1),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.15),
                   child: Column(
                     children: [
                       CustomButton(
@@ -126,7 +128,7 @@ class _ForgoutPasswordPageState extends State<ForgoutPasswordPage> {
                           }
                         },
                       ),
-                      SizedBox(height: screenHeight * 0.016),
+                      SizedBox(height: screenHeight * 0.03),
                       CustomButton(
                         label: "Back",
                         onPressed: () {

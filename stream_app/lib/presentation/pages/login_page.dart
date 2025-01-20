@@ -29,11 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -44,17 +46,17 @@ class _LoginPageState extends State<LoginPage> {
             minHeight: screenHeight,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: screenHeight * 0.1),
                 SvgPicture.asset(
                   'assets/subtract_phrase.svg',
-                  width: 100,
-                  height: 100,
+                  width: screenWidth * 0.2,
+                  height: screenWidth * 0.2,
                 ),
-                SizedBox(height: screenHeight * 0.04),
+                SizedBox(height: screenHeight * 0.03),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -63,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         color: Colors.grey,
                         fontFamily: 'Montserrat',
-                        fontSize: MediaQuery.of(context).size.width * 0.024,
+                        fontSize: screenWidth * 0.03,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -78,22 +80,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: screenHeight * 0.04),
+                SizedBox(height: screenHeight * 0.05),
                 Text(
                   'Create an account',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontSize: screenWidth * 0.05,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: screenHeight * 0.01),
                 Text(
                   'To get started, please complete your account registration.',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: Colors.grey,
-                    fontSize: MediaQuery.of(context).size.width * 0.024,
+                    fontSize: screenWidth * 0.03,
                     fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
@@ -106,24 +108,45 @@ class _LoginPageState extends State<LoginPage> {
                       iconPath: 'assets/google.svg',
                       backgroundColor: const Color(0xFF2E1635),
                       onPressed: () async {
-                        final googleUser =
-                            await GoogleSignInService().signInWithGoogle();
-                        if (googleUser != null) {
-                          final appUser = AppUser(
-                            displayName: googleUser.displayName ?? "User",
-                            email: googleUser.email,
-                            photoURL: googleUser.photoURL,
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(user: appUser),
-                            ),
-                          );
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
+                        try {
+                          final googleUser =
+                              await GoogleSignInService().signInWithGoogle();
+                          if (googleUser != null) {
+                            final appUser = AppUser(
+                              displayName: googleUser.displayName ?? "User",
+                              email: googleUser.email,
+                              photoURL: googleUser.photoURL,
+                            );
+
+                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(user: appUser),
+                              ),
+                              (route) => false,
+                            );
+                          } else {
+                            Navigator.pop(context);
+                            print("User canceled the login.");
+                          }
+                        } catch (e) {
+                          Navigator.pop(context);
+                          print("Error while logging in with Google: $e");
                         }
                       },
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: screenWidth * 0.04),
                     CustomIconButton(
                       iconPath: 'assets/apple.svg',
                       backgroundColor: const Color(0xFF6C6D7A),
@@ -133,21 +156,21 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: screenHeight * 0.03),
                 const DividerWithText(text: 'Or Sign up With'),
                 SizedBox(height: screenHeight * 0.04),
                 CustomTextField(
                   label: 'Email',
                   controller: emailController,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: screenHeight * 0.01),
                 CustomTextField(
                   label: 'Password',
                   controller: passwordController,
                   isPassword: true,
                   svgIconPath: 'assets/eye.svg',
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: screenHeight * 0.01),
                 CustomTextField(
                   label: 'Confirm your Password',
                   controller: confirmPasswordController,

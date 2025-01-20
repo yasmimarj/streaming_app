@@ -6,6 +6,7 @@ import 'package:untold/data/models/movie.dart';
 import 'package:untold/data/services/api_service.dart';
 import 'package:untold/data/repositories/movie_repository.dart';
 import 'package:untold/data/services/dio_config.dart';
+import 'package:untold/presentation/pages/profile_page.dart';
 import 'package:untold/presentation/widgets/custom_app_bar.dart';
 import 'package:untold/presentation/widgets/movie_card.dart';
 import 'package:untold/state/gradient_store.dart';
@@ -81,6 +82,14 @@ class _HomePageState extends State<HomePage> {
               CustomAppBar(
                 userPhotoURL: widget.user?.photoURL,
                 showUserAvatar: true,
+                onAvatarTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
+                },
               ),
               Expanded(
                 child: _isLoading
