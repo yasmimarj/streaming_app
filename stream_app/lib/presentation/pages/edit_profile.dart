@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untold/presentation/widgets/custom_button.dart';
-import 'package:untold/presentation/widgets/custom_icon_button.dart';
 import 'package:untold/presentation/widgets/custom_text_field.dart';
 import 'package:untold/presentation/widgets/profile_image_picker.dart';
 
@@ -52,7 +51,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Seta de voltar
               SizedBox(height: screenHeight * 0.03),
               Row(
                 children: [
@@ -70,15 +68,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Título em duas linhas
               Text(
                 'Edit\nProfile',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: screenWidth * 0.04,
                   fontWeight: FontWeight.w700,
-                  height: 1.2, // Controle de espaçamento entre linhas
+                  height: 1.2,
                 ),
               ),
               SizedBox(height: screenHeight * 0.04),
@@ -118,18 +114,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ],
               ),
-
               SizedBox(height: screenHeight * 0.03),
               CustomTextField(
                 label: 'Your name',
                 controller: currentPasswordController,
               ),
-
-              // Divisor
-
               SizedBox(height: screenHeight * 0.3),
-
-              // Botão de atualizar senha
               Center(
                 child: CustomButton(
                   label: 'Update Password',

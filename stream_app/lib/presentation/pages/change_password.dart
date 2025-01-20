@@ -24,7 +24,6 @@ class ChangePasswordPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Seta de voltar
               SizedBox(height: screenHeight * 0.03),
               Row(
                 children: [
@@ -42,50 +41,38 @@ class ChangePasswordPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Título em duas linhas
               Text(
                 'Change\nPassword',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: screenWidth * 0.04,
                   fontWeight: FontWeight.w700,
-                  height: 1.2, // Controle de espaçamento entre linhas
+                  height: 1.2,
                 ),
               ),
               SizedBox(height: screenHeight * 0.04),
-
-              // Campo de senha atual
               CustomTextField(
                 label: 'Current password',
                 controller: currentPasswordController,
                 isPassword: true,
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Divisor
               Divider(
                 color: Colors.white.withOpacity(0.3),
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Campo de nova senha
               CustomTextField(
                 label: 'New password',
                 controller: newPasswordController,
                 isPassword: true,
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Campo de confirmar nova senha
               CustomTextField(
                 label: 'Confirm new password',
                 controller: confirmPasswordController,
                 isPassword: true,
               ),
               SizedBox(height: screenHeight * 0.3),
-
-              // Botão de atualizar senha
               Center(
                 child: CustomButton(
                   label: 'Update Password',
@@ -105,7 +92,7 @@ class ChangePasswordPage extends StatelessWidget {
                       return;
                     }
 
-                    // Lógica de atualização de senha
+                    // TODO: Lógica de atualização de senha
                   },
                 ),
               ),
